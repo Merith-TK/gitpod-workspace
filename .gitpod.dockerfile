@@ -1,5 +1,6 @@
 FROM archlinux
 
+RUN pacman-key --init
 RUN pacman -Syu --noconfirm \
     git \
     git-lfs \
