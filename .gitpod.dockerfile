@@ -30,8 +30,8 @@ RUN sudo git lfs install --system
 ####
 
 # add yay for aur
-RUN cd /tmp && \
+RUN sudo su gitpod -c cd /tmp && \
     git clone https://aur.archlinux.org/yay-bin && \
     cd yay-bin && \
     makepkg -si --noconfirm
-RUN yay -Syu --noconfirm neofetch
+RUN sudo su gitpod -c "yay -Syu --noconfirm neofetch"
