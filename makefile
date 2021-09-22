@@ -1,5 +1,5 @@
 test:
-	docker build -f .gitpod.dockerfile -t gitpod-dockerfile-test . 
+	docker build -f .gitpod/dockerfile -t gitpod-dockerfile-test . 
 	docker run -it gitpod-dockerfile-test bash
 
 arch: 

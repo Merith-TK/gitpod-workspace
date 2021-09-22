@@ -1,7 +1,8 @@
 FROM archlinux
 
+COPY .gitpod/pacman.conf /etc/pacman.conf
 RUN pacman-key --init
-RUN pacman -Syu --noconfirm \
+RUN pacman -Syu --noconfirm --needed \
     git \
     git-lfs \
     docker \
