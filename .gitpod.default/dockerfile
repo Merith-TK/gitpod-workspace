@@ -34,3 +34,4 @@ RUN sudo su gitpod -c cd /tmp && \
     cd yay-bin && \
     makepkg -si --noconfirm
 RUN sudo su gitpod -c "yay -Syu --noconfirm neofetch"
+RUN neofetch
