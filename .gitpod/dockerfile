@@ -1,6 +1,11 @@
 FROM archlinux
 
-RUN pacman -Syu --noconfirm --needed \
+# setup keyring
+RUN pacman-key --init && \
+    pacman-key --populate && \
+    pacman -Syu archlinux-keyring --noconfirm
+
+RUN pacman -S --noconfirm --needed \
     git \
     git-lfs \
     docker \
@@ -10,7 +15,8 @@ RUN pacman -Syu --noconfirm --needed \
 #### Taken From gitpod/workspace-base with slight modifications
 ### Gitpod user ###
 RUN useradd -l -u 33333 -G wheel -md /home/gitpod -s /bin/bash -p gitpod gitpod
-RUN sed -i.bkp -e 's/# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/g' /etc/sudoers 
+#RUN sed -i.bkp -e 's/# %wheel ALL=(ALL) NOPASSWD: ALL/%wheel ALL=(ALL) NOPASSWD: ALL/g' /etc/sudoers 
+RUN echo "%wheel ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers
 
 ENV HOME=/home/gitpod
 WORKDIR $HOME
@@ -23,6 +29,7 @@ USER gitpod
 RUN sudo echo "Running 'sudo' for Gitpod: success"
 RUN mkdir /home/gitpod/.bashrc.d
 RUN (echo; echo "for i in \$(ls \$HOME/.bashrc.d/*); do source \$i; done"; echo) >> /home/gitpod/.bashrc
+RUN curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh >> /home/gitpod/.bashrc.d/git-prompt.sh
 
 # configure git-lfs
 RUN sudo git lfs install --system
